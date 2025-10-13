@@ -1,0 +1,17 @@
+# Maven
+/target
+
+# IDE
+/.idea
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Jib
+jib-cache/

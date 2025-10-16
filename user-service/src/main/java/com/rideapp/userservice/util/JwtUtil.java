@@ -20,6 +20,17 @@ public class JwtUtil {
                 .compact();
     }
 
+    public static String generateToken(String subject, Long userId, String role) {
+        return Jwts.builder()
+                .setSubject(subject)
+                .claim("userId", userId)
+                .claim("role", role)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SECRET_KEY)
+                .compact();
+    }
+
     public static String getSubject(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)

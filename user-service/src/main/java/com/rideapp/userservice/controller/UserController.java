@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rideapp.userservice.dto.UserDTO;
 import com.rideapp.userservice.dto.UserRequest;
+import com.rideapp.userservice.dto.UserInfoWithRatingDTO;
 import com.rideapp.userservice.service.UserService;
 
 import jakarta.validation.Valid;
@@ -53,5 +54,10 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @GetMapping("/{id}/info")
+    public ResponseEntity<UserInfoWithRatingDTO> getUserInfoWithRating(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserInfoWithRating(id));
     }
 }

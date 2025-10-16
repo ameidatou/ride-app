@@ -4,7 +4,11 @@ import com.rideapp.rideservice.entity.Ride;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RideRepository extends JpaRepository<Ride, Long> {
-    // Custom query methods can be added here
+    List<Ride> findByDriverId(Long driverId);
+    List<Ride> findByUserId(Long userId);
+    List<Ride> findByDriverIdIsNullAndStatus(String status);
 }

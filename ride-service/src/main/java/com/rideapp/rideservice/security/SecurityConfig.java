@@ -23,6 +23,13 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                // Allow POST /api/rides for RIDER (create ride)
+                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/rides").hasRole("RIDER")
+                // Allow POST /api/rides/{id}/accept, /complete, /rate-rider for DRIVER
+                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/rides/*/accept", "/api/rides/*/complete", "/api/rides/*/rate-rider").hasRole("DRIVER")
+                // Allow POST /api/rides/{id}/rate for RIDER
+                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/rides/*/rate").hasRole("RIDER")
+                .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/rides/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.rideapp.userservice.dto.UserDTO;
+import com.rideapp.userservice.dto.UserInfoWithRatingDTO;
 import com.rideapp.userservice.dto.UserRequest;
 import com.rideapp.userservice.entity.User;
 import com.rideapp.userservice.repository.UserRepository;
@@ -61,6 +62,19 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
         return toDTO(user);
+    }
+
+    public UserInfoWithRatingDTO getUserInfoWithRating(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+        UserInfoWithRatingDTO dto = new UserInfoWithRatingDTO();
+        dto.setId(user.getId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole().name());
+        // TODO: Calculate averageRating from rides (requires ride-service or shared DB)
+        dto.setAverageRating(null); // Placeholder
+        return dto;
     }
 
     private UserDTO toDTO(User user) {

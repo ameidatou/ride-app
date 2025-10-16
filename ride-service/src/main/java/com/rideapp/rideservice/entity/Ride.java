@@ -19,5 +19,16 @@ public class Ride {
     private LocalDateTime pickupTime;
     private Long userId;
     private Long driverId;
-    private String status;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
+    public enum Status {
+        REQUESTED, ACCEPTED, COMPLETED, CANCELLED
+    }
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    private Integer rating; // rating given by rider to driver
+    private Integer riderRating; // rating given by driver to rider
 }

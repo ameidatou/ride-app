@@ -2,6 +2,7 @@ package com.rideapp.rideservice;
 
 import com.rideapp.rideservice.entity.Ride;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -39,10 +40,10 @@ public class RideFlowIntegrationTest {
         return Jwts.builder()
                 .claim("userId", userId)
                 .claim("role", role)
-                .claim("sub", subject)
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(key)
+                .setSubject(subject)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 

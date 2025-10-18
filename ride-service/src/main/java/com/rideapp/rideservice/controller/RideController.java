@@ -35,7 +35,7 @@ public class RideController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Ride> getRideById(@PathVariable Long id) {
+    public ResponseEntity<Ride> getRideById(@PathVariable("id") Long id) {
         Optional<Ride> ride = rideService.getRideById(id);
         return ride.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -60,7 +60,7 @@ public class RideController {
 
     @PreAuthorize("hasRole('DRIVER')")
     @PostMapping("/{id}/accept")
-    public ResponseEntity<Ride> acceptRide(@PathVariable Long id, Authentication authentication, HttpServletRequest request) {
+    public ResponseEntity<Ride> acceptRide(@PathVariable("id") Long id, Authentication authentication, HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         Long driverId = null;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -85,7 +85,7 @@ public class RideController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRide(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteRide(@PathVariable("id") Long id) {
         rideService.deleteRide(id);
         return ResponseEntity.noContent().build();
     }
@@ -117,7 +117,7 @@ public class RideController {
     // DRIVER: Complete a ride
     @PreAuthorize("hasRole('DRIVER')")
     @PostMapping("/{id}/complete")
-    public ResponseEntity<Ride> completeRide(@PathVariable Long id, Authentication authentication, HttpServletRequest request) {
+    public ResponseEntity<Ride> completeRide(@PathVariable("id") Long id, Authentication authentication, HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         Long driverId = null;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -155,7 +155,7 @@ public class RideController {
     // RIDER: Cancel a ride
     @PreAuthorize("hasRole('RIDER')")
     @PostMapping("/{id}/cancel")
-    public ResponseEntity<Ride> cancelRide(@PathVariable Long id, Authentication authentication, HttpServletRequest request) {
+    public ResponseEntity<Ride> cancelRide(@PathVariable("id") Long id, Authentication authentication, HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         Long userId = null;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -177,7 +177,7 @@ public class RideController {
     // RIDER: Rate a driver
     @PreAuthorize("hasRole('RIDER')")
     @PostMapping("/{id}/rate")
-    public ResponseEntity<String> rateDriver(@PathVariable Long id, @RequestParam int rating, Authentication authentication, HttpServletRequest request) {
+    public ResponseEntity<String> rateDriver(@PathVariable("id") Long id, @RequestParam int rating, Authentication authentication, HttpServletRequest request) {
         Optional<Ride> rideOpt = rideService.getRideById(id);
         if (rideOpt.isEmpty()) return ResponseEntity.notFound().build();
         String authHeader = request.getHeader("Authorization");
@@ -199,7 +199,7 @@ public class RideController {
     // DRIVER: Rate a rider
     @PreAuthorize("hasRole('DRIVER')")
     @PostMapping("/{id}/rate-rider")
-    public ResponseEntity<String> rateRider(@PathVariable Long id, @RequestParam int rating, Authentication authentication, HttpServletRequest request) {
+    public ResponseEntity<String> rateRider(@PathVariable("id") Long id, @RequestParam int rating, Authentication authentication, HttpServletRequest request) {
         Optional<Ride> rideOpt = rideService.getRideById(id);
         if (rideOpt.isEmpty()) return ResponseEntity.notFound().build();
         String authHeader = request.getHeader("Authorization");
@@ -219,7 +219,7 @@ public class RideController {
     }
 
     @GetMapping("/{id}/duration")
-    public ResponseEntity<String> getRideDuration(@PathVariable Long id) {
+    public ResponseEntity<String> getRideDuration(@PathVariable("id") Long id) {
         Optional<Ride> rideOpt = rideService.getRideById(id);
         if (rideOpt.isEmpty()) return ResponseEntity.notFound().build();
         Ride ride = rideOpt.get();
@@ -234,7 +234,7 @@ public class RideController {
     }
 
     @GetMapping("/{id}/details")
-    public ResponseEntity<?> getRideDetailsWithUserInfo(@PathVariable Long id) {
+    public ResponseEntity<?> getRideDetailsWithUserInfo(@PathVariable("id") Long id) {
         Optional<Ride> rideOpt = rideService.getRideById(id);
         if (rideOpt.isEmpty()) return ResponseEntity.notFound().build();
         Ride ride = rideOpt.get();

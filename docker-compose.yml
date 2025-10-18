@@ -21,9 +21,6 @@ services:
         condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: test
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/userdb
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: pass
     ports:
       - "8080:8080"
   ride-service:
@@ -33,9 +30,6 @@ services:
         condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: test
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/userdb
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: pass
     ports:
       - "8081:8081"
 volumes:

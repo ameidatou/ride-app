@@ -31,6 +31,6 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: test
     ports:
-      - "8081:8081"
+      - "8082:8082"
 volumes:
   db_data:
